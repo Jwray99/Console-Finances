@@ -106,5 +106,10 @@ for (let i = 1; i < finances.length; i++){
     changes.push(change);
 }
 
+for(let i = 0; i < changes.length; i++){
+    totalchange += changes[i];
+}
+
+let averagechange = totalchange/(finances.length - 1);
 
 
