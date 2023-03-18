@@ -87,7 +87,7 @@ var finances = [
 ['Feb-2017', 671099]
 ];
 
-console.log(finances.length)
+
 //this calculates the total of finance array
 let total = 0;
 
@@ -95,21 +95,55 @@ for(let i = 0; i < finances.length; i++){
     total = total + finances[i][1]
 }
 console.log(total)
+//creates a array with the changes 
+let changeAr = new Array(85);
 
-//calculates the average loss/profit 
-
-let changes = [];
-let totalchange = 0;
-// takes the difference and stores it in a array
-for (let i = 1; i < finances.length; i++){
-    let change = finances[i][1] - finances[i - 1][1];
-    changes.push(change);
+for (i = 0; i < finances.length; i++) {
+    if (i) {
+        change = (finances[i][1] - finances[i-1][1])
+        changeAr[i - 1] = change; 
+    }
 }
 
-for(let i = 0; i < changes.length; i++){
-    totalchange += changes[i];
-}
+// creates an average of the changes 
+let average = 0;
+let totalChange = 0;
 
-let averagechange = totalchange/(finances.length - 1);
+for (i = 0; i < changeAr.length; i++) {
+    totalChange = (totalChange + changeAr[i]);
+    average = (totalChange / changeAr.length);
+};
+
+// gets biggest profit and the losses then gets the month 
+let Greatest = 0;
+let Lowest = 0;
+let ProfitM = null;
+let LossesM = null;
+
+for (i = 0; i < changeAr.length; i++) {
+    if (changeAr[i] > Greatest) {
+    Greatest = changeAr[i];
+    };
+    if (changeAr[i] < Lowest) {
+        Lowest = changeAr[i];
+    };
+    if (i) {
+        if (finances[i][1] - finances[i - 1][1] === Greatest) {
+            ProfitM = finances[i][0];
+        }
+        if (finances[i][1] - finances[i - 1][1] === Lowest) {
+            LossesM = finances[i][0];
+        }
+    }
+};
 
 
+
+
+console.log("Financial Analysis");
+console.log("------------------------------------");
+console.log("Total months: " + finances.length);
+console.log("Net total: $" + total);
+console.log("Average change: $" + average.toFixed(2));
+console.log("Greatest increase in profitMs: " + ProfitM + " ($" + Greatest + ")");
+console.log("Greatest decrease in profitMs: " + LossesM + " ($" + Lowest + ")");
